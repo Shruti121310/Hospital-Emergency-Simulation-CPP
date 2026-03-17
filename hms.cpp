@@ -3,7 +3,6 @@
 
 using namespace std;
 
-/* ===================== PATIENT ===================== */
 class Patient {
 public:
     int id, severity, health;
@@ -41,7 +40,6 @@ public:
     }
 };
 
-/* ===================== DOCTOR ===================== */
 class Doctor {
 public:
     int fatigue;
@@ -64,7 +62,6 @@ public:
     }
 };
 
-/* ===================== HOSPITAL ===================== */
 class Hospital {
 public:
     int beds = 6, icuBeds = 2;
@@ -89,7 +86,6 @@ public:
     }
 };
 
-/* ===================== DASHBOARD ===================== */
 void showDashboard(Hospital &h, int turn) {
     cout << "\n================ HOSPITAL STATUS =================\n";
     cout << "Turn: " << turn << "\n";
@@ -120,7 +116,6 @@ void showDashboard(Hospital &h, int turn) {
     cout << "==================================================\n";
 }
 
-/* ===================== SIMULATION ===================== */
 class Simulation {
     Hospital hospital;
     int turn = 1, pid = 1;
@@ -131,7 +126,6 @@ public:
         srand(time(0));
         cout << "=== Hospital Emergency Management Simulation ===\n";
 
-        // কন্ডিশন আপডেট: রেপুটেশন এবং ফান্ড থাকতে হবে
         while (turn <= MAX_TURNS && hospital.reputation > 0 && hospital.fund > 0) {
             showDashboard(hospital, turn);
 
@@ -204,12 +198,10 @@ private:
     bool refer(Patient* p) {
         if (rand() % 100 < 70) {
             cout << "Referral successful.\n";
-            // পরিবর্তন: রেফার করলে রেপুটেশন কমানো হয়েছে (লজিক্যাল নেগেটিভ ইমপ্যাক্ট)
             hospital.reputation -= 5;
             hospital.fund += 1000;
         } else {
             cout << "Referral failed. Patient died.\n";
-            // পরিবর্তন: রেফারেল ফেইল হলে রেপুটেশন আরও বেশি কমবে
             hospital.reputation -= 15;
         }
         return true;
@@ -280,7 +272,6 @@ private:
     }
 
     void checkTermination() {
-        // রেপুটেশন বা ফান্ড ০ হয়ে গেলে গেম ওভার
         if (hospital.reputation <= 0 || hospital.fund <= 0) {
             if (hospital.fund <= 0) hospital.fund = 0;
             if (hospital.reputation <= 0) hospital.reputation = 0;
@@ -328,7 +319,6 @@ private:
     }
 };
 
-/* ===================== MAIN ===================== */
 int main() {
     Simulation sim;
     sim.run();
